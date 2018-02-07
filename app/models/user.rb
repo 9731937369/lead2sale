@@ -29,6 +29,15 @@ class User
   belongs_to :role
   has_many :prospects
 
+  before_save :assign_default_role
+
+  def assign_default_role
+    if self.role == nil
+      role = Role.find_by(name: "Sales Associate")
+      self.role_id = role.id
+    end
+  end
+
   ## Confirmable
   # field :confirmation_token,   type: String
   # field :confirmed_at,         type: Time

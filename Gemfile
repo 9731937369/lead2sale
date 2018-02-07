@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 gem 'mongoid', github: 'mongoid/mongoid'
 gem 'devise'
+gem 'pry'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.8'
 group :production do

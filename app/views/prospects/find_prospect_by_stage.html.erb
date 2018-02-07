@@ -1,0 +1,44 @@
+<table border = 1>
+	<thead>
+		<tr>
+			<th>Full Name</th>
+			<th>Email</th>
+			<th>Stage</th>
+			<th>Update Pipeline</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @prospects.each do |prospect| %>
+		<tr>
+			<td><%= prospect.fullname %></td>
+			<td><%= prospect.email %></td>
+			<td><%= prospect.stage_id %></td>
+			<td><%= form_for prospect do |f|%>
+					<%= f.text_field :stage_id, value: "5a7405efe6fc8c252e000001"  %>
+					<%#= f.text_field :stage_id, value: "5a740611e6fc8c252e000002"%>
+					<%#= f.text_field :stage_id, value: "5a74062fe6fc8c252e000003"%>
+
+					<%= f.submit "Negotiate" %>
+				<% end %>
+			</td>
+			<td><%= form_for prospect do |f|%>
+					<%= f.text_field :stage_id, value: "5a7405efe6fc8c252e000002"  %>
+					<%#= f.text_field :stage_id, value: "5a740611e6fc8c252e000002"%>
+					<%#= f.text_field :stage_id, value: "5a74062fe6fc8c252e000003"%>
+
+					<%= f.submit "Won" %>
+				<% end %>
+			</td>
+			<td><%= form_for prospect do |f|%>
+					<%= f.text_field :stage_id, value: "5a7405efe6fc8c252e000003"  %>
+					<%#= f.text_field :stage_id, value: "5a740611e6fc8c252e000002"%>
+					<%#= f.text_field :stage_id, value: "5a74062fe6fc8c252e000003"%>
+
+					<%= f.submit "Lost" %>
+				<% end %>
+			</td>
+			
+		</tr>
+	<% end %>
+	</tbody>
+</table>

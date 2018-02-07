@@ -6,6 +6,6 @@ class Customer
   field :location, type: String
   field :managed_by, type: Integer
 
-  belongs_to :user
+  belongs_to :user, foreign_key: :managed_by
   
 end
