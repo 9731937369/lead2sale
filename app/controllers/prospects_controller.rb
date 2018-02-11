@@ -5,6 +5,7 @@ class ProspectsController < ApplicationController
   # GET /prospects.json
   def index
     @prospects = Prospect.all
+    @prospect = Prospect.new
   end
 
   # GET /prospects/1

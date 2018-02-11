@@ -12,5 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
+$(document).ready(function(){
+	$('#datalist').DataTable();
+	$('#customerList').DataTable();
+	$('#pipeline').DataTable();
+});

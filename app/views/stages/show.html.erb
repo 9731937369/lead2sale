@@ -1,16 +1,7 @@
-<p>
-  <strong>Name:</strong>
-  <%= @stage.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @stage.description %>
-</p>
-
-<p>
-  <strong>Intrest level:</strong>
-  <%= @stage.intrest_level %>
-</p>
-
-<%= link_to 'Back', stages_path %>
+<% if Prospect.where(stage_id: @stage.id).empty? %>
+	<h2>Their is no Prospects in this Stage</h2>
+<% else %>
+	<% Prospect.where(stage_id: @stage.id).each do |prospect|%>
+		<%= prospect.fullname%>
+	<% end %>
+<% end %>

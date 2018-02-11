@@ -11,29 +11,29 @@
     </div>
   <% end %>
 
-  <div >
+  <div class="form-group">
     <%= f.label :fullname %><br>
-    <%= f.text_field :fullname %>
+    <%= f.text_field :fullname, class: "form-control" %>
     <span id="ferror"></span>
   </div>
-  <div >
+  <div class="form-group">
     <%= f.label :email %><br>
-    <%= f.text_field :email %>
+    <%= f.text_field :email, class: "form-control" %>
     <span id="eerror"></span>
   </div>
-  <div >
+  <div class="form-group">
     <%= f.label :phone %><br>
-    <%= f.number_field :phone %>
+    <%= f.number_field :phone,class: "form-control" %>
     <span id="perror"></span>
   </div>
-  <div >
+  <div class="form-group">
     <%= f.label :location %><br>
-    <%= f.text_field :location %>
+    <%= f.text_field :location, class: "form-control" %>
     <span id="lerror"></span>
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <center><%= f.submit class: "btn btn-primary" %></center>
   </div>
 <% end %>
 

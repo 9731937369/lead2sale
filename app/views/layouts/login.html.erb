@@ -11,24 +11,23 @@
   </style>
 <div class="col-md-4">
   <button type="button" class="btn btn-info btn-lg" id="myBtn">Login</button>
-
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header" style="padding:15px 20px;">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4</span>Enter Your Credential</h4>
+          <h4</span> Please Fill The Below Details</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-            <div class="form-group">
+            <div class="field">
               <%= f.label :email %><br />
-              <%= f.email_field :email,class: "form-control", autofocus: true, autocomplete: "email" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
             </div>
 
-            <div class="form-group">
+            <div class="field">
               <%= f.label :password %><br />
-              <%= f.password_field :password,class: "form-control", autocomplete: "off" %>
+              <%= f.password_field :password, autocomplete: "off" %>
             </div>
 
             <% if devise_mapping.rememberable? -%>
@@ -37,8 +36,9 @@
                 <%= f.label :remember_me %>
               </div>
             <% end -%>
+
             <div class="actions">
-              <center><%= f.submit "Log in", class: "btn btn-primary" %></center>
+              <%= f.submit "Log in" %>
             </div>
           <% end %>
         </div>
