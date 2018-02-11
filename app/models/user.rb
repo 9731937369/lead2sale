@@ -38,6 +38,10 @@ class User
     end
   end
 
+  def role?(role)
+    self.role.name = role
+  end
+
   ## Confirmable
   # field :confirmation_token,   type: String
   # field :confirmed_at,         type: Time

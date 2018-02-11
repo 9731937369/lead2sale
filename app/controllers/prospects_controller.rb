@@ -1,6 +1,6 @@
 class ProspectsController < ApplicationController
   before_action :set_prospect, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /prospects
   # GET /prospects.json
   def index
@@ -62,14 +62,9 @@ class ProspectsController < ApplicationController
   end
 
   def find_prospect_by_stage
-    @prospects = Prospect.where(stage_id: "5a7405c7e6fc8c252e000000")
-    @prospect1 = Prospect.where(stage_id: "5a7405c7e6fc8c252e000001")
-    @prospect2 = Prospect.where(stage_id: "5a7405c7e6fc8c252e000002")
-    @prospect3 = Prospect.where(stage_id: "5a7405c7e6fc8c252e000003")
-
-
+    @prospects = Prospect.where(stage_id: "5a7d5fb7e6fc8c280c000002")
   end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_prospect

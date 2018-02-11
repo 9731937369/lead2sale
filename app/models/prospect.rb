@@ -11,7 +11,7 @@ class Prospect
   belongs_to :stage
 
   before_create :assign_stage_id
-  after_create :create_customer
+  after_update :create_customer, :destroy_prospect
 
   def assign_stage_id
   	if self.stage_id == nil
@@ -23,8 +23,16 @@ class Prospect
 
   def create_customer
   	stage = Stage.find_by(name: "Won")
+    #binding.pry
   	if self.stage_id == stage.id
   		Customer.create(fullname: self.fullname, email: self.email, phone: self.phone, location: self.location, managed_by: self.managed_by)
   	end
+  end
+
+  def destroy_prospect
+    stage = Stage.find_by(name: "Lost")
+    if self.stage_id == stage.id
+      self.destroy
+    end
   end
 end

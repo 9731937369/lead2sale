@@ -11,24 +11,106 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div >
     <%= f.label :fullname %><br>
     <%= f.text_field :fullname %>
+    <span id="ferror"></span>
   </div>
-  <div class="field">
+  <div >
     <%= f.label :email %><br>
     <%= f.text_field :email %>
+    <span id="eerror"></span>
   </div>
-  <div class="field">
+  <div >
     <%= f.label :phone %><br>
     <%= f.number_field :phone %>
+    <span id="perror"></span>
   </div>
-  <div class="field">
+  <div >
     <%= f.label :location %><br>
     <%= f.text_field :location %>
+    <span id="lerror"></span>
   </div>
 
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+<script>
+  var fullnameErrorMsg = document.getElementById('ferror');
+  var emailErrorMsg = document.getElementById('eerror');
+  var phoneErrorMsg = document.getElementById('perror');
+  var locationErrorMsg = document.getElementById('lerror');
+  
+  var fullnameMsg = document.getElementById('prospect_fullname');
+  var emailMsg = document.getElementById('prospect_email');
+  var phoneMsg = document.getElementById('prospect_phone');
+  var locationMsg = document.getElementById('prospect_location');
+
+  var formHandle = document.getElementById('new_prospect');
+
+  var emailFormatter = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  var mobileFormatter = /^\d{10}$/;
+
+  errors = {
+    fullname :false,
+    email :false,
+    phone :false,
+    location :false
+  };
+
+  function validateFullname(){
+    if(fullnameMsg.value == ""){
+      fullnameErrorMsg.innerHTML = "Full Name con't be Blank";
+      errors.fullname = false;
+    }else{
+      fullnameErrorMsg.innerHTML = "";
+      errors.fullname = true;
+    }
+  }
+  function validateEmail(){
+    if(emailMsg.value == ""){
+      emailErrorMsg.innerHTML = "Email con't be Blank";
+      errors.email = false;
+    }else if(!emailFormatter.test(emailMsg.value)){
+      emailErrorMsg.innerHTML = "Email is Not valid";
+      errors.email = false;
+    }else{
+      emailErrorMsg.innerHTML = "";
+      errors.email = true;
+    }
+  }
+  function validatePhone(){
+    if(phoneMsg.value == ""){
+      phoneErrorMsg.innerHTML = "Phone number con't be Blank";
+      errors.phone = false;
+    }else if(!mobileFormatter.test(phoneMsg.value)){
+      phoneErrorMsg.innerHTML = "Enter the 10 digit Phone number";
+      errors.phone = false;
+    }else{
+      phoneErrorMsg.innerHTML = "";
+      errors.phone = true;
+    }
+  }
+  function validateLocation(){
+    if(locationMsg.value == ""){
+      locationErrorMsg.innerHTML = "Location con't be Blank";
+      errors.location = false;
+    }else{
+      locationErrorMsg.innerHTML = "";
+      errors.location = true;
+    }
+  }
+
+  formHandle.addEventListener('submit',function(e){
+    validateFullname();
+    validateEmail();
+    validatePhone();
+    validateLocation();
+
+    if(Object.values(errors).includes(false)){
+      e.preventDefault();
+    }
+  },false);
+</script>

@@ -1,28 +1,29 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Listing Stages</h1>
 
-<table>
+<table border = 1>
   <thead>
     <tr>
       <th>Name</th>
-      <th>Id</th>
-      <th>Description</th>
       <th>Intrest level</th>
-      <th colspan="3"></th>
+      <th>Action</th>
+      <th>id</th>
     </tr>
   </thead>
 
   <tbody>
     <% @stages.each do |stage| %>
       <tr>
-        <td><%= stage.name %></td>
-        <td><%= stage.id %></td>
-        <td><%= stage.description %></td>
+        <td><%= link_to stage.name, stage%></td>
         <td><%= stage.intrest_level %></td>
-        <td><%= link_to 'Show', stage %></td>
-        <td><%= link_to 'Edit', edit_stage_path(stage) %></td>
-        <td><%= link_to 'Destroy', stage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if user_signed_in? %>
+          <% if (can? :update, stage) %>
+            <td><%= link_to 'Edit', edit_stage_path(stage) %>
+          <% end %>
+          <% if can? :destroy, stage%>
+            <%= link_to 'Destroy', stage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %> 
+        <% end %>
+        <td><%= stage.id%></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +31,3 @@
 
 <br>
 
-<%= link_to 'New Stage', new_stage_path %>

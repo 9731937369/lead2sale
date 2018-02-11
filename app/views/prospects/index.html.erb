@@ -1,37 +1,40 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Prospects</h1>
-
-<table>
+<table border = 1>
   <thead>
     <tr>
+      <th>Associator</th>
       <th>Fullname</th>
       <th>Email</th>
       <th>Phone</th>
       <th>Location</th>
       <th>Stage</th>
-      <th>Managed by</th>
-      <th colspan="3"></th>
+      <th>Action</th>
     </tr>
   </thead>
-
   <tbody>
     <% @prospects.each do |prospect| %>
+      <% if user_signed_in? && current_user.id == prospect.managed_by %>
       <tr>
+        <td><%= link_to prospect.user.fullname, prospect %></td>
         <td><%= prospect.fullname %></td>
         <td><%= prospect.email %></td>
         <td><%= prospect.phone %></td>
         <td><%= prospect.location %></td>
-        <td><%= prospect.stage_id %></td>
-        <td><%= prospect.managed_by %></td>
-        <td><%= link_to 'Show', prospect %></td>
-        <td><%= link_to 'Edit', edit_prospect_path(prospect) %></td>
-        <td><%= link_to 'Destroy', prospect, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= prospect.stage.name %></td>
+        <td>
+        <% if user_signed_in? %>
+          <% if (can? :update, prospect)%>
+            <%= link_to 'Edit', edit_prospect_path(prospect) %>
+          <% end %>
+          <% if (can? :destroy, prospect) %>
+            <%= link_to 'Destroy', prospect, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        <% end %>
       </tr>
+      <%end%>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Prospect', new_prospect_path %>
+<% if user_signed_in?  && (can? :create, Prospect.new) %>
+  <%= link_to 'New Prospect', new_prospect_path %>
+<% end %>

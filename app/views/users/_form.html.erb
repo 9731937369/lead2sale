@@ -1,0 +1,164 @@
+<%= form_for(@user, remote: true) do |f| %>
+<%# if @user.errors.any? %>
+    
+<%# end %>
+
+<div class="form-group">
+  <%= f.label :FULLname %><br />
+  <%= f.text_field :fullname, class:"form-control",autofocus: true %>
+  <span id="full_nameError"></span>
+</div>
+
+<div class="form-group">
+  <%= f.label :email %><br />
+  <%= f.email_field :email,class:"form-control", autofocus: true %>
+  <span id="emailError"></span>
+</div>
+
+<div class="form-group">
+  <%= f.label :phone %><br />
+  <%= f.text_field :phone, class:"form-control",autofocus: true %>
+   <span id="phoneError"></span>
+</div>
+<div class="form-group">
+  <%= f.label :password %>
+  <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+  <% end %><br />
+  <%= f.password_field :password,class:"form-control", autocomplete: "off" %>
+  <span id="passwordError"></span>
+</div>
+
+<div class="form-group"
+  <%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation, class:"form-control",autocomplete: "off" %>
+   <span id="passwordConfirmationError"></span>
+</div>
+
+  <%#= f.label :role_id %>
+  <%#= f.collection_select :role_id, Role.all, :id, :name  %>
+
+<div class="actions" id="submit">
+  <%= f.submit "Sign up", class: 'btn btn-primary' %>
+</div>
+<%end%>
+<script>  
+   var alphabetFormatter = /^[A-Za-z]+$/;
+   var emailFormatter = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+  
+   var phoneFormatter = /^[0-9]+$/;
+   var passwordFormatter = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+
+
+
+  var fullnameHandle = document.getElementById('user_full_name');
+ var emailHandle = document.getElementById('user_email');
+ var phoneHandle = document.getElementById('user_phone'); 
+ var passwordHandle = document.getElementById('user_password');
+  var passwordConfirmationHandle = document.getElementById('user_password_confirmation'); 
+
+  var fullnameErrorHandle = document.getElementById('full_nameError');
+  var emailErrorHandle = document.getElementById('emailError');
+  var phoneErrorHandle = document.getElementById('phoneError');
+  var passwordErrorHandle = document.getElementById('passwordError');
+  var passwordConfirmationErrorHandle = document.getElementById('passwordConfirmationError');
+  
+    
+    validate = {
+          "full_name": false,
+          "email": false,
+          "phone": false,
+          "password": false,
+          "password_confirmation": false
+
+          }
+     function validateFullName(){
+        if(fullnameHandle.value == "") {
+        fullnameErrorHandle.innerHTML = "Can't be blank";
+          validate.full_name = false;
+       }else if(!alphabetFormatter.test(fullnameHandle.value)) {
+           fullnameErrorHandle.innerHTML = "Should only be alphabets";
+           validate.full_name = false;
+         }else{
+          fullnameErrorHandle.innerHTML = "";
+          validate.full_name = true; 
+         } 
+     }   
+
+     function validateEmail(){
+      if (emailHandle.value== "") {
+      emailErrorHandle.innerHTML = "Cant be blank"; 
+         validate.email = false;
+      }else if (!emailFormatter.test(emailHandle.value)) {
+      emailErrorHandle.innerHTML = "should a valid format";
+          validate.email = false;
+      } else {
+          emailErrorHandle.innerHTML = "";
+           validate.email = true;
+      }
+     }  
+
+     function validatePhone(){
+       if (phoneHandle.value== "") {
+       phoneErrorHandle.innerHTML = "Cant be blank";
+             validate.phone = false;
+       }else if (!phoneFormatter.test(phoneHandle.value)){
+        phoneErrorHandle.innerHTML = "should be a number";
+            validate.phone = false;
+       }else if (phoneHandle.value.length !== 10) {
+        phoneErrorHandle.innerHTML = "should be 10 digits";
+             validate.phone = false;
+      }else{
+        phoneErrorHandle.innerHTML = "";
+            validate.phone = true;
+      }
+     }
+
+     function validatePassword(){
+      if (passwordHandle.value== "") {
+      passwordErrorHandle.innerHTML = "Cant be blank";
+         validate.password = false;
+      }else if (!passwordFormatter.test(passwordHandle.value)) {
+      passwordErrorHandle.innerHTML = "Ensure you have 1 upper case, 1 lower case and 1 number";
+         validate.password = false;
+      }else if (passwordHandle.value.length < 6) {
+         passwordErrorHandle.innerHTML = "should be 6 digits";
+        validate.password = false;
+      }else {
+        passwordErrorHandle.innerHTML = "";
+        validate.password = true;
+      }
+    }
+  
+    function validatePasswordConfirmation(){
+      if (passwordConfirmationHandle.value== "") {
+      passwordConfirmationErrorHandle.innerHTML = "Cant be blank";
+        validate.password_confirmation = false;
+      }else if (passwordHandle.value !== passwordConfirmationHandle.value) {
+      passwordConfirmationErrorHandle.innerHTML = "password doesn't match";
+         validate.password_confirmation = false;
+      }else {
+        passwordConfirmationErrorHandle.innerHTML = "";
+          validate.password_confirmation = true;
+      }
+    }
+
+   var formHandle = document.getElementById('new_user');
+   formHandle.addEventListener('submit', function(e){
+     validateFullName();
+     validateEmail();
+     validatePhone();
+     validatePassword();
+     validatePasswordConfirmation();
+
+     if(Object.values(validate).includes(false)){
+       e.preventDefault();
+       console.log("validate exist")
+     }
+
+     },false);
+
+   
+
+
+   </script>

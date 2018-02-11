@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Fullname:</strong>
   <%= @prospect.fullname %>
@@ -22,13 +20,12 @@
 
 <p>
   <strong>Stage:</strong>
-  <%= @prospect.stage_id %>
+  <%= @prospect.stage.name %>
 </p>
 
 <p>
-  <strong>Managed by:</strong>
-  <%= @prospect.managed_by %>
+  <strong>Associator:</strong>
+  <%= @prospect.user.fullname %>
 </p>
 
-<%= link_to 'Edit', edit_prospect_path(@prospect) %> |
 <%= link_to 'Back', prospects_path %>

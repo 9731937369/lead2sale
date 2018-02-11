@@ -9,36 +9,26 @@
 	</thead>
 	<tbody>
 		<% @prospects.each do |prospect| %>
+		<% if user_signed_in? && current_user.id == prospect.managed_by || current_user.role_id == "5a7a8cbae6fc8c19ea000000" %>
 		<tr>
 			<td><%= prospect.fullname %></td>
 			<td><%= prospect.email %></td>
-			<td><%= prospect.stage_id %></td>
+			<td><%= prospect.stage.name %></td>
 			<td><%= form_for prospect do |f|%>
-					<%= f.text_field :stage_id, value: "5a7405efe6fc8c252e000001"  %>
-					<%#= f.text_field :stage_id, value: "5a740611e6fc8c252e000002"%>
-					<%#= f.text_field :stage_id, value: "5a74062fe6fc8c252e000003"%>
-
+					<%= f.hidden_field :stage_id, value: "5a7d5fb7e6fc8c280c000003"  %>
 					<%= f.submit "Negotiate" %>
 				<% end %>
-			</td>
-			<td><%= form_for prospect do |f|%>
-					<%= f.text_field :stage_id, value: "5a7405efe6fc8c252e000002"  %>
-					<%#= f.text_field :stage_id, value: "5a740611e6fc8c252e000002"%>
-					<%#= f.text_field :stage_id, value: "5a74062fe6fc8c252e000003"%>
-
+				<%= form_for prospect do |f|%>
+					<%= f.hidden_field :stage_id, value: "5a7d5fb7e6fc8c280c000004"  %>
 					<%= f.submit "Won" %>
 				<% end %>
-			</td>
-			<td><%= form_for prospect do |f|%>
-					<%= f.text_field :stage_id, value: "5a7405efe6fc8c252e000003"  %>
-					<%#= f.text_field :stage_id, value: "5a740611e6fc8c252e000002"%>
-					<%#= f.text_field :stage_id, value: "5a74062fe6fc8c252e000003"%>
-
+				<%= form_for prospect do |f|%>
+					<%= f.hidden_field :stage_id, value: "5a7d5fb7e6fc8c280c000005"  %>
 					<%= f.submit "Lost" %>
 				<% end %>
 			</td>
-			
 		</tr>
+		<% end %>
 	<% end %>
 	</tbody>
 </table>

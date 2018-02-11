@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
-  devise_for :users
+
+  resources :users
+  devise_for :users, :path_prefix => 'd', :skip => [:registrations] 
+  as :user do
+  get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+  put 'users' => 'devise/registrations#update', :as => 'user_registration'
+  end
+
   resources :stages
   resources :customers
   get 'prospects/find_prospect_by_stage'
-  resources :prospects
+  resources :prospects  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
