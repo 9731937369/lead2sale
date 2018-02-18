@@ -11,7 +11,7 @@ class Prospect
   belongs_to :stage
 
   before_create :assign_stage_id
-  after_update :create_customer, :destroy_prospect
+  after_update :create_customer#, :destroy_prospect
 
   def assign_stage_id
   	if self.stage_id == nil

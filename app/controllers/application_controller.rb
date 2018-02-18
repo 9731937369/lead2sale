@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
   	redirect_to root_path, notice: "You are not authorized to access that page."
   end
   
+  rescue_from SocketError do 
+    redirect_to root_path, notice: "Make sure you have Internet"
+  end
+  
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected

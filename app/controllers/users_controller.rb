@@ -12,12 +12,12 @@ load_and_authorize_resource
  def create
   @user = User.new(user_params)
   respond_to do |format|
-   if @user.save
-    format.html { redirect_to users_path, notice: 'user was successfully created.' }
-        format.js
-      else
-        format.js
-   end
+    if @user.save
+      format.html { redirect_to users_path, notice: 'Successfully Created.' }
+      format.js
+    else
+      format.js
+    end
   end
   # if @user.save
   # redirect_to users_path, notice: "Successfully added user "
@@ -37,7 +37,7 @@ load_and_authorize_resource
  def update
   @user = User.find(params[:id])
   if @user.update_attributes(user_params)
-  redirect_to user_path(@user.id), notice: "Successfully updated user "
+  redirect_to user_path(@user.id), notice: "Successfully Updated. "
   else
   render action: "edit"
   end
@@ -46,7 +46,7 @@ load_and_authorize_resource
  def destroy
  @user = User.find(params[:id])
  @user.destroy
- redirect_to users_path,notice: "Successfully updated user "
+ redirect_to users_path,notice: "Successfully Deleted. "
  end
 
   private

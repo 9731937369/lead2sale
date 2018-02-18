@@ -1,7 +1,33 @@
-<% if Prospect.where(stage_id: @stage.id).empty? %>
-	<h2>Their is no Prospects in this Stage</h2>
-<% else %>
-	<% Prospect.where(stage_id: @stage.id).each do |prospect|%>
-		<%= prospect.fullname%>
-	<% end %>
-<% end %>
+<div class = "page-header"><h2>All Prospects in Stage <%= @stage.name%></h2></div>
+<table class = "table" id = "datalist">
+	<thead>
+		<tr>
+			<th>Associator</th>
+			<th>Full Name</th>
+			<th>Phone</th>
+			<th>Email</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% Prospect.where(stage_id: @stage.id).each do |prospect|%>
+			<tr>
+				<td><%= prospect.user.fullname%></td>
+				<td><%= prospect.fullname%></td>
+				<td><%= prospect.phone%></td>
+				<td><%= prospect.email%></td>
+				<td><% if can? :update, prospect %>
+          				<%= link_to edit_prospect_path(prospect.id) do %>
+            				<i class = "glyphicon glyphicon-pencil"></i>
+          				<% end %>
+        			<%end%>
+        			<% if can? :destroy, prospect %>
+          				<%= link_to  prospect, method: :delete, data: { confirm: 'Are you sure?' } do  %>
+            				<i class = "glyphicon glyphicon-trash"></i>
+          				<% end %>
+        			<% end %>
+    			</td>
+			</tr>
+		<% end %>		
+	</tbody>
+</table>

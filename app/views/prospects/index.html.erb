@@ -1,41 +1,44 @@
-<div class="row">
-  <div class='col-md-8'>
-    <table class = "table" id = "datalist">
-  <thead>
-    <tr>
-      <th>Associator</th>
-      <th>Fullname</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Stage</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @prospects.each do |prospect| %>
-      <% if user_signed_in? && current_user.id == prospect.managed_by %>
+<% if user_signed_in? %>
+  <div class="page-header">
+    <h2>All Prospects</h2>
+  </div>
+  <table  id = "datalist">
+    <thead>
       <tr>
-        <td><%= link_to prospect.user.fullname, prospect %></td>
-        <td><%= prospect.fullname %></td>
-        <td><%= prospect.email %></td>
-        <td><%= prospect.phone %></td>
-        <td><%= prospect.stage.name %></td>
-        <td>
-        <% if user_signed_in? %>
-          <% if (can? :update, prospect)%>
-            <%= link_to 'Edit', edit_prospect_path(prospect) %>
-          <% end %>
-          <% if (can? :destroy, prospect) %>
-            <%= link_to 'Destroy', prospect, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <% end %>
-        <% end %>
+        <th>Associator</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Stage</th>
+        <th>Action</th>
       </tr>
-      <%end%>
-    <% end %>
-  </tbody>
-</table>
-</div>
-
+    </thead>
+    <tbody>
+      <% @prospects.each do |prospect| %>
+        <% if current_user.id == prospect.managed_by || current_user.role.name == "Sales Manager" %>
+        <tr>
+          <td><%= link_to prospect.user.try(:fullname), prospect %></td>
+          <td><%= prospect.try(:fullname) %></td>
+          <td><%= prospect.try(:email) %></td>
+          <td><%= prospect.try(:phone) %></td>
+          <td><%= prospect.stage.try(:name) %></td>
+          <td><% if can? :update, prospect %>
+                <%= link_to edit_prospect_path(prospect.id) do %>
+                  <i class = "glyphicon glyphicon-pencil"></i>
+                <% end %>
+              <%end%>
+              <% if can? :destroy, prospect %>
+                <%= link_to  prospect, method: :delete, data: { confirm: 'Are you sure?' } do  %>
+                  <i class = "glyphicon glyphicon-trash"></i>
+                <% end %>
+              <% end %>
+          </td>
+        </tr>
+        <%end%>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
  <style>
   .modal-header, h4, .close {
       background-color: #5cb85c;
@@ -48,7 +51,6 @@
   }
   </style>
 <% if user_signed_in? %>
-<div class="col-md-4">
   <button type="button" class="btn btn-info btn-lg" id="myBtn">Add Prospect</button>
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -65,7 +67,6 @@
       </div>      
     </div>
   </div> 
-</div>
 <% end %>
 <script>
 $(document).ready(function(){

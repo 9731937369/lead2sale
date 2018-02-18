@@ -1,3 +1,4 @@
+<div class = "page-header"><h2>All Customers</h2></div>
 <table id="customerList">
   <thead>
     <tr>
@@ -11,21 +12,24 @@
   </thead>
   <tbody>
     <% @customers.each do |customer| %>
-    <% if user_signed_in? && current_user.id == customer.managed_by %>
+    <% if current_user.id == customer.managed_by || current_user.role.name == "Sales Manager" %>
       <tr>
-        <td><%= link_to customer.fullname, customer %></td>
-        <td><%= customer.email %></td>
-        <td><%= customer.phone %></td>
-        <td><%= customer.location %></td>
-        <td><%= customer.user.fullname %></td>
-        <% if user_signed_in? %>
-          <% if (can? :update, customer)%>
-            <td><%= link_to 'Edit', edit_customer_path(customer) %>
-          <% end %>
-          <% if (can? :destroy, customer) %>
-            <%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <% end %>
-        <% end %>
+        <td><%= link_to customer.try(:fullname), customer %></td>
+        <td><%= customer.try(:email) %></td>
+        <td><%= customer.try(:phone) %></td>
+        <td><%= customer.try(:location) %></td>
+        <td><%= customer.user.try(:fullname) %></td>
+        <td><% if can? :update, customer %>
+              <%= link_to edit_customer_path(customer.id) do %>
+                <i class = "glyphicon glyphicon-pencil"></i>
+              <% end %>
+            <%end%>
+            <% if can? :destroy, customer %>
+              <%= link_to  customer, method: :delete, data: { confirm: 'Are you sure?' } do  %>
+                <i class = "glyphicon glyphicon-trash"></i>
+              <% end %>
+            <% end %>
+        </td>
       </tr>
       <% end %>
     <% end %>

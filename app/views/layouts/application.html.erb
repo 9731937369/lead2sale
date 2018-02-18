@@ -17,7 +17,7 @@
 <!-- ************************************************ -->
 <body style="font-family: Times New Roman, Times, serif; font-size: 16px; font-color: red; ">
 <!-- <div class = "container"> -->
-  <nav class="navbar navbar-inverse" style="background-color: #373a3f">
+  <nav class="navbar navbar-inverse" style="background-color: #ffa100">
     <div class="container">
       <ul class="nav navbar-nav">
       <% if !user_signed_in?%>
@@ -36,11 +36,11 @@
         	</li>
 		<%end%>
 		<% if user_signed_in? && ( Role.find(current_user.role_id).name == "Sales Manager")%>
-			<li><%= link_to "All Associates", users_path %></li>
+			<li><a style="color: #4286f4 " href = "/users">All Associates</a></li>
         <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-       <li ><a style="color: #4286f4 "><i class = "glyphicon glyphicon-earphone" ></i> <%= User.find_by(fullname: "Manager").phone %></a></li>
+       <li ><a style="color: #4286f4 "><i class = "glyphicon glyphicon-earphone" ></i> <%= 9731937369 %></a></li>
         <% if user_signed_in? %> 
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" style="color: #4286f4 ">Hi <%=(current_user.fullname).capitalize%>! ( <%= Role.find(current_user.role_id).name %> )<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -48,14 +48,13 @@
             </ul>
           </li>
         <% else %>
-        	<li><a href="/d/users/sign_in">login<i class="glyphicon glyphicon-log-in"></i></a></li>
+        	<li><a href="/d/users/sign_in" style="color: #4286f4 ">login<i class="glyphicon glyphicon-log-in"></i></a></li>
         <% end %>
       </ul>
   </div>
 </nav>
 <div class= "container">
-
-<marquee direction = "right" width="50%" style="color:red">Customer Management Portal </marquee ><marquee style="color:green" direction = "left"  width="50%">Keep Track of Your Customer Report</marquee >
+<marquee direction = "right" width="50%" style="color:red">Customer Management Portal </marquee ><marquee direction = "left"  width="50%" style="color:green">Keep Track of Your Customer Report</marquee>
 
 
 <% if notice %>

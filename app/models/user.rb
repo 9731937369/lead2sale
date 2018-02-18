@@ -30,6 +30,7 @@ class User
   has_many :prospects
 
   before_save :assign_default_role
+  #after_create :Send_mail_to_Associate
 
   def assign_default_role
     if self.role == nil
@@ -42,6 +43,9 @@ class User
     self.role.name = role
   end
 
+  def Send_mail_to_Associate
+    Notification.user_creation_mail(self).deliver_now!
+  end
   ## Confirmable
   # field :confirmation_token,   type: String
   # field :confirmed_at,         type: Time
@@ -52,4 +56,5 @@ class User
   # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
+
 end

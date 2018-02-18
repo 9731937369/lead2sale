@@ -1,18 +1,46 @@
 <div class="row">
-  <div class="col-md-8">
-    <div class="page-header">
-       <h2><%= @user.fullname %>
-       	<% if can? :update, @user %>
-		<%= link_to 'Edit', edit_user_path(@user.id),class: "btn btn-info pull-right"   %>
-		<%end%>
-		<% if can? :destroy, @user %>
-		<%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger pull-right" %>
-		<% end %>
-       </h2>
-       </div>
-         Email : <%= @user.email %></br>
-         Phone : <%= @user.phone %></br>
-         Role  : <%= @user.role.name %></br>
-
+ 
+  <div class="row">
+  <div class='col-md-12'>
+  <div class="page-header">
+    <h2>All Prospects of <%= @user.fullname%></h2>
+  </div>
+  <table class = "table" id = "datalist">
+  <thead>
+    <tr>
+      <th>Associator</th>
+      <th>Fullname</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Stage</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% Prospect.where(managed_by: @user.id).each do |prospect| %>
+      <% if user_signed_in? && current_user.id == prospect.managed_by || current_user.role.name == "Sales Manager" %>
+      <tr>
+        <td><%= link_to prospect.user.try(:fullname), prospect %></td>
+        <td><%= prospect.try(:fullname) %></td>
+        <td><%= prospect.try(:email) %></td>
+        <td><%= prospect.try(:phone) %></td>
+        <td><%= prospect.stage.try(:name) %></td>
+        <td><% if can? :update, prospect %>
+              <%= link_to edit_prospect_path(prospect.id) do %>
+                <i class = "glyphicon glyphicon-pencil"></i>
+              <% end %>
+            <%end%>
+            <% if can? :destroy, prospect %>
+              <%= link_to  prospect, method: :delete, data: { confirm: 'Are you sure?' } do  %>
+                <i class = "glyphicon glyphicon-trash"></i>
+              <% end %>
+            <% end %>
+        </td>
+      </tr>
+      <%end%>
+    <% end %>
+  </tbody>
+  </table>
+</div>
   </div>
 </div>
